@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-sch-dark font-sans antialiased;
+}
+
+.glass-nav {
+  @apply bg-white/80 backdrop-blur-lg border-b border-gray-100;
+}
+
+.h-heading {
+  @apply font-serif font-bold tracking-tight;
+}
