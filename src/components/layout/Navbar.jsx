@@ -17,7 +17,6 @@ const menuItems = [
   {
     title: "Akademik",
     submenu: [
-        { label: "Jumlah Siswa", path: "#" }, 
         { label: "Ekstrakurikuler", path: "/akademik/ekstrakurikuler" }, 
         { label: "Prestasi", path: "/akademik/prestasi" } 
     ]
