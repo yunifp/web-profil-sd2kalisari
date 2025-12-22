@@ -17,13 +17,13 @@ const menuItems = [
   {
     title: "Akademik",
     submenu: [
-        { label: "Jumlah Siswa", path: "#" }, // Belum ada halamannya, biarkan # dulu
-        { label: "Ekstrakurikuler", path: "/akademik/ekstrakurikuler" }, // SUDAH DIPERBAIKI
-        { label: "Prestasi", path: "/akademik/prestasi" } // SUDAH DIPERBAIKI
+        { label: "Jumlah Siswa", path: "#" }, 
+        { label: "Ekstrakurikuler", path: "/akademik/ekstrakurikuler" }, 
+        { label: "Prestasi", path: "/akademik/prestasi" } 
     ]
   },
-  { title: "Berita", path: "#" },
-  { title: "PPDB", path: "#" } 
+  { title: "Berita", path: "/berita" }, 
+  { title: "PPDB", path: "/ppdb" }
 ];
 
 const Navbar = () => {
@@ -84,10 +84,10 @@ const Navbar = () => {
               </div>
             ))}
             
-            <button className="ml-4 bg-sch-dark text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-sch-orange transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
-                <User size={16} />
-                Login
-            </button>
+            <Link to="/login" className="ml-4 bg-sch-dark text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-sch-orange transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
+    <User size={16} />
+    Login
+</Link>
           </div>
 
           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-700">
