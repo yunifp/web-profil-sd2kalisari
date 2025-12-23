@@ -10,11 +10,9 @@ const Dashboard = () => {
         <p className="text-gray-600">Selamat datang kembali, Admin.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <StatsCard title="Total Berita" value="24" colorClass="text-sch-blue" />
-        {/* Statistik tetap ada, tapi sumber datanya sekarang dari modul Struktur */}
-        <StatsCard title="Total Personil" value="32" colorClass="text-sch-orange" />
-        <StatsCard title="Siswa Baru (PPDB)" value="156" colorClass="text-sch-green" />
+        <StatsCard title="Total Staff Akademika" value="32" colorClass="text-sch-orange" />
         <StatsCard title="Prestasi" value="42" colorClass="text-sch-purple" />
       </div>
 

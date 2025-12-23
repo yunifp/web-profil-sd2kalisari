@@ -3,6 +3,7 @@ import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import PageHeader from '../components/layouts/PageHeader';
 import { Link } from 'react-router-dom';
+import heroimage from "../assets/heroimage.jpg"
 
 const PPDB = () => {
   // Simulasi data yang dikelola dari Admin Panel
@@ -42,7 +43,7 @@ const PPDB = () => {
       <PageHeader 
         title="PPDB Online" 
         subtitle={`Tahun Ajaran ${ppdbData.tahunAjaran}`} 
-        bgImage="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop"
+        bgImage={heroimage}
       />
 
       {/* Hero / CTA Section */}
