@@ -76,7 +76,7 @@ const Footer = () => {
             </div>
             
             <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-4">
-                <p>&copy; 2025 SD Negeri Kalisari. Developed with ❤️.</p>
+                <p>&copy; 2025 SD Negeri Kalisari. Developed By DRN.</p>
                 <div className="flex gap-4">
                     <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"><Facebook size={18} /></a>
                     <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all"><Instagram size={18} /></a>
