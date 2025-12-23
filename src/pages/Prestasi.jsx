@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
-import PageHeader from '../components/layout/PageHeader';
+import Navbar from '../components/layouts/Navbar';
+import Footer from '../components/layouts/Footer';
+import PageHeader from '../components/layouts/PageHeader';
 import { Reveal } from '../components/ui/Reveal';
 import { Trophy, Medal, Calendar, Award, Star } from 'lucide-react';
 
@@ -162,13 +162,7 @@ const Prestasi = () => {
                             ))}
                         </div>
 
-                        <div className="mt-16 text-center">
-                            <Reveal>
-                                <button className="px-8 py-4 bg-white border-2 border-sch-dark text-sch-dark font-bold rounded-full hover:bg-sch-dark hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg">
-                                    Lihat Arsip Tahun Lalu
-                                </button>
-                            </Reveal>
-                        </div>
+                       
                     </section>
                 </div>
             </main>

@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
+import Navbar from '../components/layouts/Navbar';
+import Footer from '../components/layouts/Footer';
 import Button from '../components/ui/Button';
 import { Reveal } from '../components/ui/Reveal';
 import { Lock, Mail } from 'lucide-react';

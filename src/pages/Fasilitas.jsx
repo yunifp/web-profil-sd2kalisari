@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
-import PageHeader from '../components/layout/PageHeader';
+import Navbar from '../components/layouts/Navbar';
+import Footer from '../components/layouts/Footer';
+import PageHeader from '../components/layouts/PageHeader';
 import { Reveal } from '../components/ui/Reveal';
 import { Wifi, Book, Monitor, Coffee, HeartPulse } from 'lucide-react';
 

@@ -1,148 +1,140 @@
 import React from 'react';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
-import PageHeader from '../components/layout/PageHeader';
-import { Reveal } from '../components/ui/Reveal';
-
-// 1. Komponen Kartu Organisasi (Reusable)
-const OrgCard = ({ name, role, nip, image, color = "border-sch-dark" }) => (
-    <div className={`relative flex flex-col items-center bg-white p-6 rounded-xl shadow-lg border-t-4 ${color} w-64 hover:-translate-y-1 transition-transform duration-300 z-20`}>
-        <div className="w-20 h-20 rounded-full overflow-hidden mb-3 border-2 border-gray-100 shadow-sm">
-            <img src={image} alt={name} className="w-full h-full object-cover" />
-        </div>
-        <h3 className="font-serif font-bold text-gray-800 text-center leading-tight mb-1">{name}</h3>
-        <p className="text-sch-orange font-bold text-xs uppercase tracking-wider mb-1 text-center">{role}</p>
-        {nip && <p className="text-[10px] text-gray-400 font-mono bg-gray-50 px-2 py-0.5 rounded">NIP. {nip}</p>}
-    </div>
-);
-
-// 2. Komponen Penghubung Vertikal (Garis Lurus)
-const VerticalLine = ({ height = "h-12" }) => (
-    <div className={`w-0.5 bg-gray-300 ${height} mx-auto relative -z-0`}></div>
-);
-
-// 3. Komponen "Bracket" (Cabang Pohon)
-// Ini triknya: Div kosong dengan border atas, kiri, dan kanan untuk membuat cabang
-const TreeBranch = () => (
-    <div className="hidden md:block w-full max-w-2xl h-12 border-t-2 border-x-2 border-gray-300 rounded-t-2xl mx-auto relative -z-0 top-0.5">
-        {/* Garis kecil turun di tengah atas untuk nyambung ke KS */}
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-gray-300"></div>
-    </div>
-);
+import Navbar from '../components/layouts/Navbar';
+import Footer from '../components/layouts/Footer';
+import PageHeader from '../components/layouts/PageHeader';
 
 const StrukturOrganisasi = () => {
+  // Simulasi data dari Database
+  const allPersonnel = [
+    { id: 1, name: 'Drs. Budi Santoso, M.Pd', nip: '19750101 200003 1 001', role: 'Pimpinan', position: 'Kepala Sekolah', image: 'https://randomuser.me/api/portraits/men/1.jpg' },
+    { id: 2, name: 'Siti Aminah, S.Pd', nip: '19800505 200501 2 005', role: 'Pimpinan', position: 'Wakil Kepala Sekolah', image: 'https://randomuser.me/api/portraits/women/2.jpg' },
+    { id: 3, name: 'H. Sutrisno', role: 'Komite', position: 'Ketua Komite', image: 'https://randomuser.me/api/portraits/men/11.jpg' },
+    { id: 4, name: 'Ahmad Rizky, S.Pd', nip: '19850312 201001 1 009', role: 'Guru', position: 'Wali Kelas 1A', image: 'https://randomuser.me/api/portraits/men/3.jpg' },
+    { id: 5, name: 'Dewi Sartika, S.Pd', nip: '19880720 201212 2 003', role: 'Guru', position: 'Wali Kelas 1B', image: 'https://randomuser.me/api/portraits/women/4.jpg' },
+    { id: 6, name: 'Bambang Pamungkas', nip: '19900214 201903 1 007', role: 'Guru', position: 'Guru PJOK', image: 'https://randomuser.me/api/portraits/men/5.jpg' },
+    { id: 7, name: 'Rina Wati', nip: '19920101 202001 2 001', role: 'Staff', position: 'Tata Usaha', image: 'https://randomuser.me/api/portraits/women/6.jpg' },
+    { id: 8, name: 'Eko Prasetyo, S.Pd', nip: '19930412 202102 1 005', role: 'Guru', position: 'Wali Kelas 2A', image: 'https://randomuser.me/api/portraits/men/7.jpg' },
+    { id: 9, name: 'Sri Wahyuni, S.Pd', nip: '19940817 202203 2 002', role: 'Guru', position: 'Wali Kelas 2B', image: 'https://randomuser.me/api/portraits/women/8.jpg' },
+  ];
+
+  // Filter Data
+  const kepalaSekolah = allPersonnel.find(p => p.position.includes('Kepala Sekolah') && !p.position.includes('Wakil'));
+  const wakilKepala = allPersonnel.find(p => p.position.includes('Wakil Kepala'));
+  const komite = allPersonnel.find(p => p.role === 'Komite');
+  const subordinates = allPersonnel.filter(p => 
+    !p.position.includes('Kepala Sekolah') && 
+    !p.role.includes('Komite')
+  );
+
+  // Komponen Card Personil
+  const PersonCard = ({ person, type = 'default' }) => {
+    if (!person) return null;
+    
+    // Styling khusus berdasarkan tipe kartu
+    const isMain = type === 'main'; // KS & Waka
+    const isKomite = type === 'komite';
+    
     return (
-        <div className="min-h-screen bg-gray-50 selection:bg-sch-yellow selection:text-black">
-            <Navbar />
-            
-            <PageHeader 
-                title="Struktur Organisasi"
-                subtitle="Sinergi kepemimpinan dan manajemen dalam mewujudkan pelayanan pendidikan yang prima."
-                image="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop"
-            />
-
-            <main className="py-20 px-4 overflow-x-hidden">
-                <div className="max-w-7xl mx-auto flex flex-col items-center">
-                    
-                    {/* --- LEVEL 1: KEPALA SEKOLAH --- */}
-                    <Reveal width="100%">
-                        <div className="flex flex-col items-center">
-                            <OrgCard 
-                                name="Hj. Siti Aminah, S.Pd.SD"
-                                role="Kepala Sekolah"
-                                nip="19750101 200003 2 001"
-                                image="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
-                                color="border-sch-orange"
-                            />
-                            {/* Garis Turun dari KS */}
-                            <VerticalLine height="h-12" />
-                        </div>
-                    </Reveal>
-
-
-                    {/* --- LEVEL 2: KOMITE & TU --- */}
-                    {/* Tampilan Desktop (Pohon Bercabang) */}
-                    <div className="w-full relative">
-                        {/* Garis Cabang (Hanya muncul di Desktop) */}
-                        <Reveal delay={0.1} width="100%">
-                            <TreeBranch />
-                        </Reveal>
-
-                        {/* Wadah Kartu Level 2 */}
-                        <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-48 relative -top-1">
-                            
-                            {/* Kiri: Komite */}
-                            <Reveal delay={0.2}>
-                                <div className="flex flex-col items-center">
-                                    {/* Garis Vertikal Mobile */}
-                                    <div className="md:hidden w-0.5 h-8 bg-gray-300"></div> 
-                                    <OrgCard 
-                                        name="Budi Santoso, S.H."
-                                        role="Ketua Komite"
-                                        image="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80"
-                                        color="border-blue-500"
-                                    />
-                                </div>
-                            </Reveal>
-
-                            {/* Kanan: TU */}
-                            <Reveal delay={0.3}>
-                                <div className="flex flex-col items-center">
-                                    {/* Garis Vertikal Mobile */}
-                                    <div className="md:hidden w-0.5 h-8 bg-gray-300"></div>
-                                    <OrgCard 
-                                        name="Rina Wati, S.E."
-                                        role="Kepala Tata Usaha"
-                                        nip="19800505 200501 2 005"
-                                        image="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80"
-                                        color="border-purple-500"
-                                    />
-                                </div>
-                            </Reveal>
-                        </div>
-                    </div>
-
-                    {/* --- PENGHUBUNG KE GURU --- */}
-                    <div className="flex flex-col items-center mt-0 md:-mt-6">
-                        {/* Garis Panjang turun ke Guru */}
-                         {/* Di Mobile: garis biasa. Di Desktop: garis panjang dari tengah branch */}
-                        <div className="w-0.5 h-16 md:h-24 bg-gray-300 z-0"></div>
-                        
-                        <div className="bg-sch-dark text-white px-8 py-2 rounded-full font-serif font-bold shadow-lg z-10 mb-8">
-                            Dewan Guru & Staf
-                        </div>
-                    </div>
-
-                    {/* --- LEVEL 3: GRID GURU --- */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
-                         {[
-                            { role: "Guru Kelas I", name: "Ani Suryani, S.Pd", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru Kelas II", name: "Bambang P., S.Pd", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru Kelas III", name: "Citra Kirana, S.Pd", img: "https://images.unsplash.com/photo-1554151228-14d9def656ec?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru Kelas IV", name: "Dedi Mulyadi, S.Pd", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru Kelas V", name: "Eka Putri, S.Pd", img: "https://images.unsplash.com/photo-1598550874175-4d7112ee7e89?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru Kelas VI", name: "Fajar Nugraha, S.Pd", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru PAI", name: "Ust. Ahmad Zaki", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" },
-                            { role: "Guru PJOK", name: "Heri Susanto, S.Or", img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80" },
-                        ].map((teacher, idx) => (
-                            <Reveal key={idx} delay={idx * 0.05}>
-                                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-sch-orange transition-all flex items-center gap-4">
-                                    <img src={teacher.img} alt={teacher.name} className="w-14 h-14 rounded-full object-cover bg-gray-100" />
-                                    <div>
-                                        <h4 className="font-bold text-sch-dark text-sm">{teacher.name}</h4>
-                                        <p className="text-xs text-gray-500 uppercase tracking-wide">{teacher.role}</p>
-                                    </div>
-                                </div>
-                            </Reveal>
-                        ))}
-                    </div>
-
-                </div>
-            </main>
-
-            <Footer />
+      <div className={`
+        relative flex flex-col items-center bg-white p-4 rounded-xl shadow-md transition-transform hover:-translate-y-1 z-10
+        ${isMain ? 'w-64 border-t-4 border-sch-blue' : ''}
+        ${isKomite ? 'w-56 border-t-4 border-sch-yellow bg-yellow-50/50' : ''}
+        ${type === 'sub' ? 'w-full h-full border border-gray-100 hover:shadow-lg' : ''}
+      `}>
+        <div className={`
+          rounded-full overflow-hidden border-4 border-white shadow-sm mb-3 object-cover bg-gray-200
+          ${isMain ? 'w-24 h-24' : 'w-20 h-20'}
+        `}>
+          <img src={person.image || 'https://via.placeholder.com/150'} alt={person.name} className="w-full h-full object-cover" />
         </div>
+        <div className="text-center">
+          <h4 className={`font-bold text-sch-dark leading-tight mb-1 ${isMain ? 'text-lg' : 'text-sm'}`}>
+            {person.name}
+          </h4>
+          <span className={`
+            inline-block px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider mb-1
+            ${isMain ? 'bg-sch-blue/10 text-sch-blue' : 'bg-gray-100 text-gray-600'}
+            ${isKomite ? 'bg-sch-yellow/20 text-yellow-700' : ''}
+          `}>
+            {person.position}
+          </span>
+          {person.nip && <p className="text-[10px] text-gray-400 font-mono">NIP. {person.nip}</p>}
+        </div>
+      </div>
     );
+  };
+
+  // Komponen Garis Vertikal (Pasti Lurus)
+  const VerticalLine = ({ height = 'h-12' }) => (
+    <div className={`w-0.5 ${height} bg-gray-300 mx-auto`}></div>
+  );
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-gray-800">
+      <Navbar />
+      <PageHeader 
+        title="Struktur Organisasi" 
+        subtitle="Mengenal pimpinan, guru, dan staff pengajar SD 2 Kalisari." 
+        bgImage="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
+      />
+
+      <section className="py-20 container mx-auto px-4 overflow-x-auto">
+        <div className="min-w-[768px] flex flex-col items-center">
+            
+            {/* LEVEL 1: Kepala Sekolah & Komite */}
+            <div className="flex items-center justify-center gap-8 mb-0 relative">
+                {/* Garis Penghubung Komite (Horizontal Putus-putus) */}
+                {komite && kepalaSekolah && (
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[350px] border-t-2 border-dashed border-gray-300 -z-0"></div>
+                )}
+
+                {/* Komite */}
+                {komite && <PersonCard person={komite} type="komite" />}
+                
+                {/* Kepala Sekolah */}
+                {kepalaSekolah && <PersonCard person={kepalaSekolah} type="main" />}
+            </div>
+
+            {/* Garis Turun dari KS */}
+            <VerticalLine height="h-16" />
+
+            {/* LEVEL 2: Wakil Kepala Sekolah */}
+            {wakilKepala && (
+               <>
+                  <PersonCard person={wakilKepala} type="main" />
+                  <VerticalLine height="h-16" />
+               </>
+            )}
+
+            {/* LEVEL 3: Container Guru & Staff */}
+            {/* Menggunakan konsep 'Box' agar rapi dan tidak perlu menarik garis ke setiap orang */}
+            <div className="w-full max-w-6xl relative">
+                {/* Garis Horizontal Top (Connector ke Waka) */}
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 border-4 border-white"></div>
+                
+                <div className="border-t-4 border-gray-300 pt-10 relative">
+                   {/* Label Kelompok */}
+                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-2">
+                      <span className="bg-sch-dark text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm">
+                        Dewan Guru & Staff
+                      </span>
+                   </div>
+
+                   {/* Grid Guru */}
+                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+                      {subordinates.map((person) => (
+                          <PersonCard key={person.id} person={person} type="sub" />
+                      ))}
+                   </div>
+                </div>
+            </div>
+
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
 };
 
 export default StrukturOrganisasi;
